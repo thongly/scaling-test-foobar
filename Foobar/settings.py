@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'fazbaz.apps.FazbazConfig',
 ]
 
 MIDDLEWARE = [
@@ -123,6 +125,10 @@ BROKER_URL = 'amqp://cphinxre:cOc9Wyot0n-TN2Zd5uAmaKby7lPu-Erw@zebra.rmq.cloudam
 BROKER_POOL_LIMIT = 1 # Will decrease connection usage
 BROKER_HEARTBEAT = None # We're using TCP keep-alive instead
 BROKER_CONNECTION_TIMEOUT = 30 # May require a long timeout due to Linux DNS timeouts etc
-CELERY_RESULT_BACKEND = None # AMQP is not recommended as result backend as it creates thousands of queues
 CELERY_SEND_EVENTS = False # Will not create celeryev.* queues
+CELERY_SEND_TASK_SENT_EVENT = True
 CELERY_EVENT_QUEUE_EXPIRES = 60 # Will delete all celeryev. queues without consumers after 1 minute.
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
